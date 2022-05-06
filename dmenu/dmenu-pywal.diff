@@ -1,0 +1,47 @@
+--- dmenu_run	2022-05-06 19:17:28.635112000 +0200
++++ dmenu_run	2022-05-06 19:16:40.423108781 +0200
+This patch enables pywal support for dmenu through dmenu_run.
+Keep in mind, you need to have the .Xresources patch patched.
+
+@@ -1,2 +1,41 @@
+ #!/bin/sh
++
++PYWAL()
++{
++  # Pywal
++  ls /usr/bin/xrdb && ls ~/.cache/wal/colors.dmenu.Xresources || touch ~/.cache/wal/colors.dmenu.Xresources
++  ls ~/.cache/wal/colors.dmenu.Xresources && /usr/bin/wal_dmenu.sh && xrdb -merge ~/.cache/wal/colors.Xresources
++  
++  WAL_VARS()
++  {
++    COLORLIST=~/.cache/wal/colors
++    XRESOURCES=~/.cache/wal/colors.dmenu.Xresources
++  }
++  
++  # These are the colors.
++  WAL_COLORS()
++  {
++    COLOR_01=$(sed -n 10,10p $COLORLIST)
++    COLOR_02=$(sed -n 4,4p $COLORLIST)
++    COLOR_03=$(sed -n 6,6p $COLORLIST)
++    COLOR_04=$(sed -n 1,1p $COLORLIST)
++  }
++
++  WAL_WRITE()
++  {
++    echo "!!dmenu" > $XRESOURCES
++    echo "dmenu.background:       $COLOR_01" >> $XRESOURCES
++    echo "dmenu.foreground:       $COLOR_02" >> $XRESOURCES
++    echo "dmenu.selbackground:    $COLOR_03" >> $XRESOURCES
++    echo "dmenu.selforeground:    $COLOR_04" >> $XRESOURCES
++  }
++  
++  WAL_VARS
++  WAL_COLORS
++  WAL_WRITE
++}
++
++PYWAL
++
++# Run dmenu
+ dmenu_path | dmenu "$@" | ${SHELL:-"/bin/sh"} & 
