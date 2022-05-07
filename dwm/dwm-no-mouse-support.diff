@@ -1,6 +1,6 @@
 diff -up dwm/config.def.h dwm-patched/config.def.h
 --- dwm/config.def.h	2022-04-10 20:19:57.466179697 +0200
-+++ dwm-patched/config.def.h	2022-04-10 20:20:16.115180942 +0200
++++ dwm/config.def.h	2022-04-10 20:20:16.115180942 +0200
 @@ -96,21 +96,3 @@ static Key keys[] = {
  	TAGKEYS(                        XK_9,                      8)
  	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
